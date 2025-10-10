@@ -1,0 +1,13 @@
+{
+  "name": "playwright-autotests-practice",
+  "version": "1.0.0",
+  "description": "random values generation",
+  "main": "index.js",
+  "scripts": {},
+  "author": "Liuda Oz",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.55.1",
+    "@types/node": "^24.6.2"
+  }
+}
