@@ -3,7 +3,18 @@
   "version": "1.0.0",
   "description": "random values generation",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test:ui": "npx playwright test --ui",
+    "test:run": "npx playwright test",
+    "test:coffe-cart": "npx playwright test --project=coffe-cart --ui",
+    "test:coffe-cart:headless": "npx playwright test --project=coffe-cart --headed=false",
+    "test:condulit": "npx playwright test --project=condulit --ui",
+    "test:condulit:headless": "npx playwright test --project=condulit --headed=false",
+    "test:demoqa": "npx playwright test --project=demoqa --ui",
+    "test:demoqa:headless": "npx playwright test --project=demoqa --headed=false",
+    "test:report": "npx playwright show-report",
+    "test:debug": "npx playwright test --debug"
+  },
   "author": "Liuda Oz",
   "license": "ISC",
   "devDependencies": {

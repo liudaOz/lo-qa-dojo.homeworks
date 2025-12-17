@@ -1,18 +1,132 @@
 // Допоміжні масиви букв
-const SERIES_LETTERS = ["А", "Б", "В", "Г", "Д", "Е", "К", "Л", "М", "Н", "О", "П", "Р", "С", "Т", "У", "Ф", "Х", "Ш", "Ю", "Я"];
-const UKR_ALPHABET = ["А", "Б", "В", "Г", "Ґ", "Д", "Е", "Є", "Ж", "З", "И", "І", "Ї", "Й", "К", "Л", "М", "Н", "О", "П", "Р", "С", "Т", "У", "Ф", "Х", "Ц", "Ч", "Ш", "Щ", "Ь", "Ю", "Я"];
-const UKR_ALPHABET_LOWER = UKR_ALPHABET.map(l => l.toLowerCase());
+const SERIES_LETTERS = [
+  "А",
+  "Б",
+  "В",
+  "Г",
+  "Д",
+  "Е",
+  "К",
+  "Л",
+  "М",
+  "Н",
+  "О",
+  "П",
+  "Р",
+  "С",
+  "Т",
+  "У",
+  "Ф",
+  "Х",
+  "Ш",
+  "Ю",
+  "Я",
+];
+const UKR_ALPHABET = [
+  "А",
+  "Б",
+  "В",
+  "Г",
+  "Ґ",
+  "Д",
+  "Е",
+  "Є",
+  "Ж",
+  "З",
+  "И",
+  "І",
+  "Ї",
+  "Й",
+  "К",
+  "Л",
+  "М",
+  "Н",
+  "О",
+  "П",
+  "Р",
+  "С",
+  "Т",
+  "У",
+  "Ф",
+  "Х",
+  "Ц",
+  "Ч",
+  "Ш",
+  "Щ",
+  "Ь",
+  "Ю",
+  "Я",
+];
+const ENG_ALPHABET = [
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F",
+  "G",
+  "H",
+  "I",
+  "J",
+  "K",
+  "L",
+  "M",
+  "N",
+  "O",
+  "P",
+  "Q",
+  "R",
+  "S",
+  "T",
+  "U",
+  "V",
+  "W",
+  "X",
+  "Y",
+  "Z",
+];
+const UKR_ALPHABET_LOWER = UKR_ALPHABET.map((l) => l.toLowerCase());
+const ENG_ALPHABET_LOWER = ENG_ALPHABET.map((l) => l.toLocaleLowerCase());
 
 // Транслітерація
 const translitMap: Record<string, string> = {
-  "А": "A", "Б": "B", "В": "V", "Г": "G", "Ґ": "G", "Д": "D", "Е": "E", "Є": "IE", "Ж": "ZH", "З": "Z",
-  "И": "Y", "І": "I", "Ї": "I", "Й": "Y", "К": "K", "Л": "L", "М": "M", "Н": "N", "О": "O", "П": "P",
-  "Р": "R", "С": "S", "Т": "T", "У": "U", "Ф": "F", "Х": "H", "Ц": "C", "Ч": "CH", "Ш": "SH", "Щ": "SCH",
-  "Ь": "", "Ю": "IU", "Я": "IA"
+  А: "A",
+  Б: "B",
+  В: "V",
+  Г: "G",
+  Ґ: "G",
+  Д: "D",
+  Е: "E",
+  Є: "IE",
+  Ж: "ZH",
+  З: "Z",
+  И: "Y",
+  І: "I",
+  Ї: "I",
+  Й: "Y",
+  К: "K",
+  Л: "L",
+  М: "M",
+  Н: "N",
+  О: "O",
+  П: "P",
+  Р: "R",
+  С: "S",
+  Т: "T",
+  У: "U",
+  Ф: "F",
+  Х: "H",
+  Ц: "C",
+  Ч: "CH",
+  Ш: "SH",
+  Щ: "SCH",
+  Ь: "",
+  Ю: "IU",
+  Я: "IA",
 };
 
 // Допоміжні функції
-function randomDigits(length: number): string {
+export function randomDigits(length: number): string {
   return Array.from({ length }, () => Math.floor(Math.random() * 10)).join("");
 }
 
@@ -29,10 +143,19 @@ function randomCyrillicWord(minLen = 3, maxLen = 20): string {
   return word.charAt(0).toUpperCase() + word.slice(1);
 }
 
+export function randomEnglishWord(minLen = 3, maxLen = 5): string {
+  const length = Math.floor(Math.random() * (maxLen - minLen + 1)) + minLen;
+  let word = "";
+  for (let i = 0; i < length; i++) {
+    word += randomItem(ENG_ALPHABET_LOWER);
+  }
+  return word.charAt(0).toUpperCase() + word.slice(1);
+}
+
 function transliterate(text: string): string {
   return text
     .split("")
-    .map(ch => translitMap[ch.toUpperCase()] ?? ch)
+    .map((ch) => translitMap[ch.toUpperCase()] ?? ch)
     .join("")
     .toUpperCase();
 }
@@ -49,7 +172,7 @@ export function createSeries(): string {
 
 // 3) Inn (10 digits, last 6 from Number)
 export function createInn(num: string): string {
-  return randomDigits(4) + num;  // додаємо 4 випадкові цифри + 6 цифр з createNumber()
+  return randomDigits(4) + num; // додаємо 4 випадкові цифри + 6 цифр з createNumber()
 }
 
 // 4) FinancialPhone
@@ -76,7 +199,11 @@ export function createLastName(): string {
 }
 
 // 8) FullName
-export function createFullName(last: string, first: string, middle: string): string {
+export function createFullName(
+  last: string,
+  first: string,
+  middle: string
+): string {
   return `${last} ${first} ${middle}`.replace(/'/g, "\\'");
 }
 
@@ -95,9 +222,29 @@ export function createLastNameLatin(lastName: string): string {
 }
 
 // 11) ValueEmailPerson
-export function createValueEmailPerson(finPhone: number, lastName: string): string {
+export function createValueEmailPerson(
+  finPhone: number,
+  lastName: string
+): string {
   const translitLastName = transliterate(lastName).toLowerCase();
   return `${finPhone}@${translitLastName}.ukr.net`;
+}
+
+// 26) ValueUserName
+export function createValueUserName(): string {
+  return `${randomEnglishWord().toLowerCase()}${randomDigits(4)}`;
+}
+
+// 27) ValueEmail
+export function createValueEmail(): string {
+  const username = createValueUserName();
+  return `${username}@ukr.net`;
+}
+
+// 28) ValuePassword
+export function createValuePassword(): string {
+  const password = createValueEmail();
+  return `${password}`;
 }
 
 // 12) ValuePhonePerson
@@ -117,18 +264,18 @@ export function createOpenedOn(): string {
     hour: "2-digit",
     minute: "2-digit",
     second: "2-digit",
-    hourCycle: "h23"
+    hourCycle: "h23",
   });
 
   const parts = formatter.formatToParts(now);
 
   // зберемо у формат YYYY-MM-DDTHH:mm:ss
-  const year = parts.find(p => p.type === "year")?.value;
-  const month = parts.find(p => p.type === "month")?.value;
-  const day = parts.find(p => p.type === "day")?.value;
-  const hour = parts.find(p => p.type === "hour")?.value;
-  const minute = parts.find(p => p.type === "minute")?.value;
-  const second = parts.find(p => p.type === "second")?.value;
+  const year = parts.find((p) => p.type === "year")?.value;
+  const month = parts.find((p) => p.type === "month")?.value;
+  const day = parts.find((p) => p.type === "day")?.value;
+  const hour = parts.find((p) => p.type === "hour")?.value;
+  const minute = parts.find((p) => p.type === "minute")?.value;
+  const second = parts.find((p) => p.type === "second")?.value;
 
   return `${year}-${month}-${day}T${hour}:${minute}:${second}`;
 }
@@ -139,7 +286,10 @@ export function createFullNameEntr(fullName: string): string {
 }
 
 // 15) NameCorpCardPerson
-export function createNameCorpCardPerson(firstLatin: string, lastLatin: string ): string {
+export function createNameCorpCardPerson(
+  firstLatin: string,
+  lastLatin: string
+): string {
   return `${firstLatin} ${lastLatin}`;
 }
 
@@ -150,7 +300,10 @@ export function createIdentCode(): string {
 
 // 17–20) Компанії
 export function createFullCompanyName(): string {
-  return `ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ \"ФІРМА\" \"${randomCyrillicWord(10, 20)}\"`;
+  return `ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ \"ФІРМА\" \"${randomCyrillicWord(
+    10,
+    20
+  )}\"`;
 }
 
 export function createShortCompanyName(fullCompanyName: string): string {
@@ -165,13 +318,18 @@ export function createNameCorpCardCo(foreignName: string): string {
   return foreignName
     .split(" ")
     .slice(0, 2)
-    .map(word => word.replace(/["'\\]/g, "")) // прибираємо ", ', \
+    .map((word) => word.replace(/["'\\]/g, "")) // прибираємо ", ', \
     .join(" ");
 }
 
 // 21) ValueEmailCo
-export function createValueEmailCo(valuePhoneCo:string, nameCorpCardCo: string): string {
-  return `${valuePhoneCo}@${nameCorpCardCo.replace(/\s/g, "").toLowerCase()}.ukr.net`;
+export function createValueEmailCo(
+  valuePhoneCo: string,
+  nameCorpCardCo: string
+): string {
+  return `${valuePhoneCo}@${nameCorpCardCo
+    .replace(/\s/g, "")
+    .toLowerCase()}.ukr.net`;
 }
 
 // 22) ValuePhoneCo
@@ -181,7 +339,10 @@ export function createValuePhoneCo(): string {
 
 // 23) fullBankName
 export function createFullBankName(): string {
-  return `ПУБЛІЧНЕ АКЦІОНЕРНЕ ТОВАРИСТВО \"КОМЕРЦІЙНИЙ БАНК\" \"${randomCyrillicWord(10, 20)}\"`;
+  return `ПУБЛІЧНЕ АКЦІОНЕРНЕ ТОВАРИСТВО \"КОМЕРЦІЙНИЙ БАНК\" \"${randomCyrillicWord(
+    10,
+    20
+  )}\"`;
 }
 
 // 24) shortBankName
